@@ -116,7 +116,6 @@ router.put('/:id', upload.single('image'), async (request, response) => {
   }
 });
 
-// Route for Delete a book
 router.delete('/:id', async (request, response) => {
   try {
     const { id } = request.params;
@@ -127,15 +126,6 @@ router.delete('/:id', async (request, response) => {
       return response.status(404).json({ message: 'Book not found' });
     }
 
-    // Delete the image file if it exists
-    if (book.image) {
-      const imagePath = path.join(__dirname, '..', 'uploads', path.basename(book.image));
-      fs.unlink(imagePath, (err) => {
-        if (err) {
-          console.error(err);
-        }
-      });
-    }
 
     await Book.findByIdAndDelete(id);
 
